@@ -1,6 +1,7 @@
-
-
-var apigClient = apigClientFactory.newClient();
+//var apigClientFactory = {};
+var apigClient = apigClientFactory.newClient({
+    apiKey : 'uVf7CUcDrW93dZzw7Ff8e9gYarx8P503jf1QVwaa' 
+});
 window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
 
 function voiceSearch(){
@@ -114,7 +115,7 @@ function uploadPhoto() {
 
         var params = {
             'key': fileName,
-            'bucket' : "b2-photos-album",
+            'bucket' : "photo-b2",
             'Content-Type': "image/" + filePath.toString().split(".")[1],
             'x-amz-meta-customLabels' : custom_labels,
             'Access-Control-Allow-Origin': '*',
@@ -129,7 +130,7 @@ function uploadPhoto() {
         reader.onload = function (event) {
             body = btoa(event.target.result);
             //console.log('Reader body : ', body);
-            return apigClient.uploadBucketKeyPut(params,body,additionalParams)
+            return apigClient.uploadPut(params,body,additionalParams)
             .then(function(result) {
                 console.log("result : ", result);
             })
